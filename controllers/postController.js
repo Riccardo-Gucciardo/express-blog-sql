@@ -30,26 +30,47 @@ function index(req,res){
 }
 function show(req,res){
 
-const id = parseInt(req.params.id);
+// const id = parseInt(req.params.id);
 
-const post =arrayPosts.find(arrayPosts=>arrayPosts.id === id);
+// const post =arrayPosts.find(arrayPosts=>arrayPosts.id === id);
 
-if(!post){ 
+// if(!post){ 
     
-    res.status(404)
+//     res.status(404)
 
-    return res.json( 
-        {
-            status : 404,
-            error : "not found",
-            message :"post not found"
-        }
-    );
-}
+//     return res.json( 
+//         {
+//             status : 404,
+//             error : "not found",
+//             message :"post not found"
+//         }
+//     );
+// }
 
-    res.json(post)
+//     res.json(post)
 
+// mySQL
     
+const {id} = req.params
+
+const sql = 'SELECT * FROM posts WHERE id = ?';
+
+    connection.query(sql, [id], (err, results) =>{
+            if (err) return res.status( 500 ).json({
+            error: 'Database error'
+            })
+
+            if ( results.length === 0 ) return res.status(404).json({
+                status: 404,
+                error: "Not Found",
+                message: "Pizza non trovata"
+            }) 
+
+
+        res.json(results[0])
+    })
+
+
 }
 function store(req,res){
     const newId= arrayPosts[arrayPosts.length - 1].id + 1;
@@ -159,17 +180,21 @@ function destroy(req,res){
 // arrayPosts.splice(arrayPosts.indexOf(post), 1);
 // res.sendStatus(204)
     
+
 const {id} = req.params;
 
 const sql = 'DELETE FROM posts WHERE id = ?'
 
-connection.query( sql, [id], (err) => {
-    if(err) return res.status(500).json({
+    connection.query( sql, [id], (err) => {
+    res.status(500).json({
     error: 'Database query error'
-    })
-
-    res.sendStatus(204)
 })
+
+res.sendStatus(204)
+
+})
+    
+
 
 
     
