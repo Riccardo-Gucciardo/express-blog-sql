@@ -140,25 +140,36 @@ res.json(post);
     
 }
 function destroy(req,res){
-const id = parseInt(req.params.id);
+// const id = parseInt(req.params.id);
 
-const post =arrayPosts.find(arrayPosts=>arrayPosts.id === id);
+// const post =arrayPosts.find(arrayPosts=>arrayPosts.id === id);
 
-if(!post){
+// if(!post){
     
-    res.status(404)
+//     res.status(404)
 
-    return res.json(
-        {
-            status : 404,
-            error : "not found",
-            message :"post not found"
-        }
-    );
-}
-arrayPosts.splice(arrayPosts.indexOf(post), 1);
-res.sendStatus(204)
+//     return res.json(
+//         {
+//             status : 404,
+//             error : "not found",
+//             message :"post not found"
+//         }
+//     );
+// }
+// arrayPosts.splice(arrayPosts.indexOf(post), 1);
+// res.sendStatus(204)
     
+const {id} = req.params;
+
+const sql = 'DELETE FROM posts WHERE id = ?'
+
+connection.query( sql, [id], (err) => {
+    if(err) return res.status(500).json({
+    error: 'Database query error'
+    })
+
+    res.sendStatus(204)
+})
 
 
     
