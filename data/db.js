@@ -1,6 +1,6 @@
 // all'interno dei file impostiamo le configurazioni di mySQL
 
-const mysql = require('mysq12');
+const mysql = require('mysql2');
 
 
 const connection = mysql. createConnection({

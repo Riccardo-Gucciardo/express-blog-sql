@@ -1,20 +1,24 @@
 const arrayPosts = require("../data/posts.js");
 require("../routers/postsRouter.js");
 
+const connection = require('../data/db.js')
+
 function index(req,res){
 
-    let filteredPosts = arrayPosts;
+    // let filteredPosts = arrayPosts;
 
 
-    if(req.query.tags) {
-        filteredPosts = arrayPosts.filter(arrayPosts=>{
-            return arrayPosts.tags.includes(req.query.tags)
-        })
-    }
+    // if(req.query.tags) {
+    //     filteredPosts = arrayPosts.filter(arrayPosts=>{
+    //         return arrayPosts.tags.includes(req.query.tags)
+    //     })
+    // }
 
 
-    res.json(filteredPosts)
+    // res.json(filteredPosts)
 
+
+    const sql = 'SELECT * FROM posts'
 
 
 }
